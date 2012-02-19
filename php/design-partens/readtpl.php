@@ -1,22 +1,6 @@
 <?php
-$file = file_get_contents('tpl.php');
+
 $params = array();
-
-/* if( preg_match_all('/\$params\[\'([a-zA-Z0-9_]+)\'\] = [\'\"](.*)[\'\"];/', $file, $match) !== false ){
-	for( $i = 0; $i < count($match[1]); $i++ ){
-		$params[$match[1][$i]] = $match[2][$i];
-	}
-}
-*/
-
-if( preg_match_all('/\$params\[\'([a-zA-Z0-9_]+)\'\]/', $file, $match) !== false ){
-	foreach( $match[1] as $i => $var ) {
-		$params[$var] = $i;
-	}
-}
-
-
-
 $ini = file_get_contents('value.ini');
 $iniarr = explode( "\n", $ini );
 $ini = null;
@@ -32,10 +16,31 @@ foreach( $iniarr as $line ){
 
 //var_dump($inilist);
 
-foreach( $params as $k => $v ){
-	if( @!$inilist[$k] ){
-		exec('echo "' . $k . '=' . $v . '" >> value.ini');
+/* if( preg_match_all('/\$params\[\'([a-zA-Z0-9_]+)\'\] = [\'\"](.*)[\'\"];/', $file, $match) !== false ){
+	for( $i = 0; $i < count($match[1]); $i++ ){
+		$params[$match[1][$i]] = $match[2][$i];
 	}
+}
+*/
+
+if( $_POST['submit'] ){
+	$file = file_get_contents('tpl.php');
+	$post = $_POST;
+	if( preg_match_all('/\$params\[\'([a-zA-Z0-9_]+)\'\]/', $file, $match) !== false ){
+		foreach( $match[1] as $i => $var ) {
+			if( $post[$var] ) {
+				$params[$var] = $post[$var];
+			}
+		}
+	}
+
+    exec('echo "" > value.ini');
+    foreach( $params as $k => $v ){
+        exec('echo "' . $k . '=' . $v . '" >> value.ini');
+    }
+    //var_dump($post);
+
+	header('Location:' . $post['backurl']);
 }
 
 ?>

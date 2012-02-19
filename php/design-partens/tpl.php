@@ -1,11 +1,13 @@
 <?php
-require_once('readtpl.php');
-
-echo 'val_a=' . $params['val_a'] . "\n";
-echo 'val_c=' . $params['val_c'] . "\n";
-echo 'val_b=' . $params['val_b'] . "\n";
-echo 'val_a=' . $params['val_a'] . "\n";
-echo 'tpl_file_name=' . $params['tpl_file_name'] . "\n";
-echo 'tpl_file=' . $params['tpl_file'] . "\n";
-
+include_once('readtpl.php');
 ?>
+
+<form action='readtpl.php' method='post'>
+<p>Title: <input type="text" name="title" value="<?php echo $params['title']; ?>" /></p>
+<p>Author: <input type="text" name="author" value="<?php echo $params['author']; ?>" /></p>
+<p>Desc: <input type="text" name="desc" value="<?php echo $params['desc']; ?>" /></p>
+<p>keywords: <input type="text" name="keywords" value="<?php echo $params['keywords']; ?>" /></p>
+<p>body: <input type="text" name="body" value="<?php echo $params['body']; ?>" /></p>
+<p><input type="hidden" name="backurl" value="tpl.php" /></p>
+<p><input type="submit" value="submit" name="submit" /></p>
+</form>

@@ -34,8 +34,10 @@ if( $_POST['submit'] ){
 		}
 	}
 
+    $i = 0;
     foreach( $params as $k => $v ){
-    	if( $k == 0 ){
+    	$i++;
+    	if( $i == 1 ){
     	    exec('echo "' . $k . '=' . $v . '" > value.ini');
     	} else {
             exec('echo "' . $k . '=' . $v . '" >> value.ini');
